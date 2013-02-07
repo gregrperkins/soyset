@@ -1,0 +1,27 @@
+{
+  "name": "soyset",
+  "version": "0.0.1",
+  "description": "Bundlerizing wrapper for soynode.",
+  "main": "./lib/soyset.js",
+  "dependencies": {
+    "funct": "0.0.1",
+    "soynode": "0.1.5",
+    "glob": "3.1.13",
+    "racetrack": "0.0.1",
+    "timewalk": "0.0.1",
+    "besync": "0.0.1"
+  },
+  "scripts": {
+    "test": "./node_modules/.bin/grunt test",
+    "tdd": "./node_modules/.bin/grunt tdd",
+  },
+  "devDependencies": {
+    "grunt": "0.4.0rc7",
+    "grunt-cli": "~0.1.6",
+    "grunt-contrib-watch": "~0.1.4",
+    "grunt-mocha-hack": "0.0.2",
+    "mocha": "~1.7",
+    "shoulda": "0.0.1"
+  },
+  "readme": "# soyset\n\nWrapper for soy compiler jar. I wouldn't trust it much if I were you."
+}
