@@ -14,12 +14,6 @@ var ExampleSoySet = function() {
 };
 util.inherits(ExampleSoySet, SoySet);
 
-ExampleSoySet.prototype._options = function() {
-  var ccp_soy_wrapper = require('../lib/paths');
-  ccp_soy_wrapper.tmpDir = '/tmp/soy_cache';
-  return ccp_soy_wrapper;
-};
-
 ExampleSoySet.prototype._getSoyRoots = function(cb) {
   cb(null, [
     'test/examples/ex1/green',
