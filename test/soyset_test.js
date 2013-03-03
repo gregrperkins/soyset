@@ -21,15 +21,24 @@ ExampleSoySet.prototype._getSoyRoots = function(cb) {
   ]);
 };
 
+var _verboseTrack = {print: true, indent: 2, fns: {
+  // '_resetToCompiledButNotLoaded': false
+}};
+var _silentTrack = {};
+
 describe('soyset', function () {
+  var _getSoySet = function () {
+    racetrack.configure(this.soySet, _silentTrack);
+    return this.soySet;
+  };
+
   before(function() {
-    this.trace = racetrack.traceholder;
     this.soySet = new ExampleSoySet();
-    // racetrack.use(this.soySet, {print: true});
+    racetrack.mochaHook();
   })
 
   it('is started with a proper soyJar', function (done) {
-    var soySet = this.soySet;
+    var soySet = _getSoySet.call(this);
     return besync.waterfall(done, [
       function (next) {
         should.exist(this.options.soyJar);
@@ -46,8 +55,7 @@ describe('soyset', function () {
 
   describe('getManifest', function() {
     it('gives callback a list of soy files', function (done) {
-      var soySet = this.soySet;
-      // racetrack.configure(soySet, {print: true});
+      var soySet = _getSoySet.call(this);
       return besync.waterfall(done, [
         soySet.getManifest,
         function (soyManifest, next) {
@@ -65,7 +73,7 @@ describe('soyset', function () {
 
   describe('makeProjectSoyJsRoot', function() {
     it('outputs a directory with compiled js', function (done) {
-      var soySet = this.soySet;
+      var soySet = _getSoySet.call(this);
       return besync.waterfall(done, [
         soySet.makeProjectSoyJsRoot,
         soySet.findJsFiles,
@@ -79,7 +87,7 @@ describe('soyset', function () {
 
   describe('toFiles', function() {
     it('gives callback a list of strings', function (done) {
-      var soySet = this.soySet;
+      var soySet = _getSoySet.call(this);
       soySet.toFiles(funct.err(done, function (names) {
         names[0].should.match(/examples\/ex1\/green\/simple.soy.js$/);
         names[1].should.match(/examples\/ex1\/mustard\/colonal.soy.js$/);
@@ -89,14 +97,8 @@ describe('soyset', function () {
   });
 
   describe('toScripts', function(obj) {
-    before(function() {
-      // racetrack.use(this.soySet, {print: true, indent: 2});
-    });
-    // racetrack.use(this, {print: true, printCallbacks: true});
-
     it('gives callback an object', function (done) {
-      // done = this.trace(this, done, 'toScripts_gives_callback_an_object');
-      var soySet = this.soySet;
+      var soySet = _getSoySet.call(this);
       return besync.waterfall(done, [
         soySet.toScripts,
         function (scripts) {
@@ -118,7 +120,7 @@ describe('soyset', function () {
 
   describe('toFunctions', function () {
     it('compiles the templates onto an object', function (done) {
-      var soySet = this.soySet;
+      var soySet = _getSoySet.call(this);
       soySet.toFunctions(funct.err(done, function (templates) {
         var globals = Object.keys(templates).sort();
         // Check that we at least got some basic props exposed
@@ -131,7 +133,7 @@ describe('soyset', function () {
     }); // templates onto an object
 
     it('creates usable functions', function (done) {
-      var soySet = this.soySet;
+      var soySet = _getSoySet.call(this);
       soySet.toFunctions(funct.err(done, function (templates) {
         // Can't use should directly on these, created in sub-vm
         new should.Assertion(templates.green.simple.main).be.a('function');

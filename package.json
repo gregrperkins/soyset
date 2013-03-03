@@ -1,18 +1,18 @@
 {
   "name": "soyset",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Bundlerizing wrapper for soynode.",
   "main": "./lib/soyset.js",
   "dependencies": {
     "funct": "0.0.1",
     "soynode": "0.1.5",
     "glob": "3.1.13",
-    "racetrack": "0.0.1",
     "timewalk": "0.0.1",
     "besync": "0.0.1"
   },
   "devDependencies": {
     "mocha": "~1.7",
+    "racetrack": "0.0.2",
     "shoulda": "0.0.1",
     "supervisor": "~0.5.0"
   },
